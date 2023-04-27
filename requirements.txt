@@ -1,2 +1,3 @@
-xmltodict
-dicttoxml
+dicttoxml==1.7.16
+msgpack==1.0.5
+xmltodict==0.13.0

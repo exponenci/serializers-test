@@ -6,7 +6,7 @@ from utils.timer import timer
 
 class NativeSerializer(SerializerInterface):
     def __init__(self, cls):
-        super().__init__("NATIVE", cls)
+        super().__init__("Native", cls)
 
     @timer
     def serialize(self, input: Any) -> Any:
