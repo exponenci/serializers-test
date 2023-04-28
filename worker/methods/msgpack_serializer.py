@@ -10,9 +10,9 @@ class MsgPackSerializer(SerializerInterface):
         super().__init__("MessagePack", cls)
 
     @timer
-    def serialize(self, input: Any) -> Any:
-        return msgpack.packb(input)
+    def serialize(self, input: Any, *args, **kwargs) -> Any:
+        return msgpack.packb(input, *args, **kwargs)
 
     @timer
-    def deserialize(self, input: Any) -> Any:
-        return msgpack.unpackb(input)
+    def deserialize(self, input: Any, *args, **kwargs) -> Any:
+        return msgpack.unpackb(input, *args, **kwargs)

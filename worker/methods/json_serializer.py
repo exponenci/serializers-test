@@ -10,9 +10,9 @@ class JsonSerializer(SerializerInterface):
         super().__init__("JSON", cls)
 
     @timer
-    def serialize(self, input: Any) -> Any:
-        return json.dumps(input)
+    def serialize(self, input: Any, *args, **kwargs) -> Any:
+        return json.dumps(input, *args, **kwargs)
 
     @timer
-    def deserialize(self, input: Any) -> Any:
-        return json.loads(input)
+    def deserialize(self, input: Any, *args, **kwargs) -> Any:
+        return json.loads(input, *args, **kwargs)

@@ -1,0 +1,47 @@
+version: '3'
+
+
+services:
+  proxy:
+    image: <>
+    expose:
+    ports:
+    environment:      
+    command: python3 proxy.py
+    depends_on:
+          - native
+          - xml
+          - json
+          - yaml
+          - msgpack
+
+  native:
+    image: <>
+    expose:
+    environment:      
+    command: python3 worker.py
+
+  xml:
+    image: <>
+    expose:
+    environment:
+    command: python worker.py
+
+  json:
+    image: <>
+    expose:
+      - "5477/udp"
+    environment:
+    command: python3 worker.py
+
+  yaml:
+    image: <>
+    expose:
+    environment:
+    command: python worker.py
+
+  msgpack:
+    image: <>
+    expose:
+    environment:
+    command: python worker.py

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+message DataStruct {
+  bool fbool = 1;
+  int32 fint = 2;
+  float ffloat = 3;
+  string fstring = 4;
+  repeated int32 farray = 5;
+  map<string, int32> fdict = 6;
+}

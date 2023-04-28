@@ -5,13 +5,13 @@ from utils.timer import timer
 
 
 class NativeSerializer(SerializerInterface):
-    def __init__(self, cls):
-        super().__init__("Native", cls)
+    def __init__(self, container):
+        super().__init__("Native", container)
 
     @timer
-    def serialize(self, input: Any) -> Any:
+    def serialize(self, input: Any, *args, **kwargs) -> Any:
         return input.__str__()
 
     @timer
-    def deserialize(self, input: Any) -> Any:
+    def deserialize(self, input: Any, *args, **kwargs) -> Any:
         return eval(input)
