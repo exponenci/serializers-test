@@ -24,7 +24,7 @@ class UdpProxy(BaseRequestHandler):
                 socket.IP_ADD_MEMBERSHIP, 
                 mreq)
             if data['param'] == 'all':
-                sock_out.sendto(b'\n', (MCAST_GRP, MCAST_PORT))
+                sock_out.sendto(b'get_result', (MCAST_GRP, MCAST_PORT))
                 ans_count = 0
                 result = []
                 while ans_count < len(METHODS_LIST):
@@ -33,11 +33,11 @@ class UdpProxy(BaseRequestHandler):
                     ans_count += 1
                 sock_in.sendto(json.dumps({'results': result}).encode(), self.client_address)
             elif data['param'] in METHODS_LIST:
-                sock_out.sendto(b'\n', (data['param'], SERVICE_PORT))
+                sock_out.sendto(b'get_result', (data['param'], SERVICE_PORT))
                 result = sock_out.recv(1024)
                 sock_in.sendto(result, self.client_address)
             else:
-                sock_in.sendto(b'{"status":"error", "info":"no such method!"}', self.client_address)
+                sock_in.sendto(b'{"status":"error", "info":"no such param!"}', self.client_address)
             sock_out.close()
         else:
             sock_in.sendto(b'{"status":"error", "info":"no such method!"}', self.client_address)

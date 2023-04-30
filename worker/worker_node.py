@@ -68,12 +68,20 @@ class Worker:
         return self
 
     def loop(self):
+        if self.serializer is None:
+            return
         while True:
-            _, request_addr = self.sock.recvfrom(16 * 1024)
-            result = self.format_experiment_result(*self.run_experiment())
-            self.sock.sendto(
-                json.dumps({'status': 'ok', 'result': result}).encode(), 
-                request_addr)
+            data, request_addr = self.sock.recvfrom(16 * 1024)
+            if data == b'get_result':
+                result = self.format_experiment_result(*self.run_experiment())
+                self.sock.sendto(
+                    json.dumps({'status': 'ok', 'result': result}).encode(), 
+                    request_addr)
+            else:
+                self.sock.sendto(
+                    json.dumps({'status': 'error', 'info': 'no such method! ({})'.format(
+                        self.serializer.method_name())}).encode(), 
+                    request_addr)
 
     def run_experiment(self, run_count: int = 1000):
         if self.serializer is None:
