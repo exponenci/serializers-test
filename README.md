@@ -23,15 +23,17 @@ echo '{"method":"get_result","param":"all"}' | nc -u localhost 2000
 ```
 # ответ
 {"results": [
-    {"status": "ok", "result": "MessagePack-134-7.80mus-2.52mus\n"}, 
-    {"status": "ok", "result": "JSON-249-8.55mus-6.32mus\n"}, 
-    {"status": "ok", "result": "Native-249-4.99mus-56.01mus\n"}, 
-    {"status": "ok", "result": "Protobuf-121-122.60mus-105.17mus\n"}, 
-    {"status": "ok", "result": "XML-459-122.19mus-132.49mus\n"}, 
-    {"status": "ok", "result": "Avro-100-172.55mus-117.92mus\n"}, 
-    {"status": "ok", "result": "YAML-230-897.07mus-1755.67mus\n"}
+    {"status": "ok", "result": "Avro-160-170.55mus-116.74mus\n"}, 
+    {"status": "ok", "result": "JSON-314-9.29mus-7.47mus\n"}, 
+    {"status": "ok", "result": "MessagePack-216-17.15mus-3.16mus\n"}, 
+    {"status": "ok", "result": "Native-314-6.25mus-60.14mus\n"}, 
+    {"status": "ok", "result": "Protobuf-188-132.21mus-105.61mus\n"}, 
+    {"status": "ok", "result": "XML-571-122.97mus-129.89mus\n"}, 
+    {"status": "ok", "result": "YAML-311-968.50mus-1841.37mus\n"}
 ]}
 ```
+
+ps. здесь mus - микросек. За результат взято среднее время за 1000 сериализаций/десериализаций.
 
 ## Код
 В директории `/worker` хранится код различных методов сериализации (реализованы все методы), обернутые в сущности `Worker`: когда код запускается, создается класс с нужным сериализатором и начинают прослушиваться 2 сокета (для p2p и мультикастовых запросов); когда приходит запрос от какой-то ноды, воркер запускает эксперимент с имеющимся сериализатором (1000 раз сериализует и десериализует "экспериментальную" структуру из `experimental_meta`) и возвращает результат ноде. 
