@@ -1,4 +1,4 @@
-from base_container import BaseSerializerContainer
+from methods.serializer_container.base_container import BaseSerializerContainer
 
 
 class ProtoSerializerContainer(BaseSerializerContainer):

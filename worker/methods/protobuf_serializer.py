@@ -1,12 +1,16 @@
 from typing import Any
 
-from serializer_interface import SerializerInterface
+from methods.serializer_interface import SerializerInterface
 from utils.timer import timer
 
 
 class ProtobufSerializer(SerializerInterface):
     def __init__(self, container):
-        super().__init__("protobuf", container)
+        super().__init__("Protobuf", container)
+        if self._container is not None:
+            self.instance = self._container.cls()
+        else:
+            self.instance = container.cls()
 
     @timer
     def serialize(self, input: Any, *args, **kwargs) -> Any:
@@ -14,8 +18,5 @@ class ProtobufSerializer(SerializerInterface):
 
     @timer
     def deserialize(self, input: Any, *args, **kwargs) -> Any:
-        if self._container is None:
-            return
-        instance = self._container.cls()
-        instance.ParseFromString(input)
-        return instance
+        self.instance.ParseFromString(input)
+        return self.instance

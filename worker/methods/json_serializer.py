@@ -1,7 +1,7 @@
 import json
 from typing import Any
 
-from serializer_interface import SerializerInterface
+from methods.serializer_interface import SerializerInterface
 from utils.timer import timer
 
 
@@ -11,8 +11,8 @@ class JsonSerializer(SerializerInterface):
 
     @timer
     def serialize(self, input: Any, *args, **kwargs) -> Any:
-        return json.dumps(input, *args, **kwargs)
+        return json.dumps(input, *args, **kwargs).encode()
 
     @timer
     def deserialize(self, input: Any, *args, **kwargs) -> Any:
-        return json.loads(input, *args, **kwargs)
+        return json.loads(input.decode(), *args, **kwargs)

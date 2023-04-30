@@ -1,7 +1,7 @@
 import xmltodict
 from typing import Any
 
-from serializer_interface import SerializerInterface
+from methods.serializer_interface import SerializerInterface
 from utils.timer import timer
 
 
@@ -11,8 +11,8 @@ class XmlSerializer(SerializerInterface):
 
     @timer
     def serialize(self, input: Any, *args, **kwargs) -> Any:
-        return xmltodict.unparse(input, *args, **kwargs)
+        return xmltodict.unparse({"DataStruct": input}, *args, **kwargs).encode()
 
     @timer
     def deserialize(self, input: Any, *args, **kwargs) -> Any:
-        return xmltodict.parse(input, *args, **kwargs)
+        return dict(xmltodict.parse(input.decode(), *args, **kwargs))['DataStruct']

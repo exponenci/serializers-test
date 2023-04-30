@@ -3,7 +3,7 @@ from io import BytesIO
 
 from typing import Any
 
-from serializer_interface import SerializerInterface
+from methods.serializer_interface import SerializerInterface
 from utils.timer import timer
 
 

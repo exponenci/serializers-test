@@ -1,6 +1,6 @@
 from typing import Any
 
-from serializer_interface import SerializerInterface
+from methods.serializer_interface import SerializerInterface
 from utils.timer import timer
 
 
@@ -10,8 +10,8 @@ class NativeSerializer(SerializerInterface):
 
     @timer
     def serialize(self, input: Any, *args, **kwargs) -> Any:
-        return input.__str__()
+        return input.__str__().encode()
 
     @timer
     def deserialize(self, input: Any, *args, **kwargs) -> Any:
-        return eval(input)
+        return eval(input.decode())

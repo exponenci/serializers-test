@@ -1,0 +1,5 @@
+avro==1.11.1
+msgpack==1.0.5
+protobuf==4.22.3
+PyYAML==6.0
+xmltodict==0.13.0

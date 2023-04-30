@@ -1,7 +1,13 @@
-from datastruct_pb2 import DataStruct
-from pydict import datastruct_dict
+from experiment_meta.datastruct_pb2 import DataStruct
+from experiment_meta.pydict import datastruct_dict
+
+from google.protobuf.json_format import ParseDict
 
 
-datastruct_proto = DataStruct()
-for k, v in datastruct_dict.items():
-    setattr(datastruct_proto, k, v)
+def fast_load(dict_obj):
+    tmp = DataStruct()
+    ParseDict(dict_obj, tmp)
+    return tmp
+
+
+datastruct_proto = fast_load(datastruct_dict)

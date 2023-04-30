@@ -1,47 +1,100 @@
 version: '3'
 
-
 services:
   proxy:
-    image: <>
-    expose:
+    env_file:
+      - .env
+    build: 
+      context: ./proxy/
     ports:
-    environment:      
-    command: python3 proxy.py
+      - "2000:2000/udp"
     depends_on:
-          - native
-          - xml
-          - json
-          - yaml
-          - msgpack
+      - native
+      - xml
+      - json
+      - avro
+      - proto
+      - msgpack
+      - yaml
+
+  _workbuilder:
+    image: workernode
+    build:
+      context: ./worker/
 
   native:
-    image: <>
-    expose:
-    environment:      
-    command: python3 worker.py
+    image: workernode
+    environment:
+      - METHOD=native
+    depends_on:
+      - _workbuilder
+    env_file:
+      - .env
+    hostname: native
+    command: python3 worker_node.py
 
   xml:
-    image: <>
-    expose:
+    image: workernode
     environment:
-    command: python worker.py
+      - METHOD=xml
+    depends_on:
+      - _workbuilder
+    env_file:
+      - .env
+    hostname: xml
+    command: python3 worker_node.py
 
   json:
-    image: <>
-    expose:
-      - "5477/udp"
+    image: workernode
     environment:
-    command: python3 worker.py
+      - METHOD=json
+    depends_on:
+      - _workbuilder
+    env_file:
+      - .env
+    hostname: json
+    command: python3 worker_node.py
 
-  yaml:
-    image: <>
-    expose:
+  avro:
+    image: workernode
     environment:
-    command: python worker.py
+      - METHOD=avro
+    depends_on:
+      - _workbuilder
+    env_file:
+      - .env
+    hostname: avro
+    command: python3 worker_node.py
 
   msgpack:
-    image: <>
-    expose:
+    image: workernode
     environment:
-    command: python worker.py
+      - METHOD=msgpack
+    depends_on:
+      - _workbuilder
+    env_file:
+      - .env
+    hostname: msgpack
+    command: python3 worker_node.py
+
+  proto:
+    image: workernode
+    environment:
+      - METHOD=proto
+    depends_on:
+      - _workbuilder
+    env_file:
+      - .env
+    hostname: proto
+    command: python3 worker_node.py
+  
+  yaml:
+    image: workernode
+    environment:
+      - METHOD=yaml
+    depends_on:
+      - _workbuilder
+    env_file:
+      - .env
+    hostname: yaml
+    command: python3 worker_node.py

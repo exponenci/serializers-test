@@ -1,7 +1,7 @@
 import yaml
 from typing import Any
 
-from serializer_interface import SerializerInterface
+from methods.serializer_interface import SerializerInterface
 from utils.timer import timer
 
 
@@ -15,4 +15,4 @@ class YamlSerializer(SerializerInterface):
 
     @timer
     def deserialize(self, input: Any, *args, **kwargs) -> Any:
-        return yaml.load(input, *args, **kwargs) # Loader=yaml.FullLoader
+        return yaml.load(input, Loader=yaml.FullLoader, *args, **kwargs)
