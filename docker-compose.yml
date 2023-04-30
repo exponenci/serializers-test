@@ -17,83 +17,64 @@ services:
       - msgpack
       - yaml
 
-  _workbuilder:
-    image: workernode
-    build:
-      context: ./worker/
-
   native:
-    image: workernode
+    image: exponenci/compare-serializer:latest
     environment:
       - METHOD=native
-    depends_on:
-      - _workbuilder
     env_file:
       - .env
     hostname: native
     command: python3 worker_node.py
 
   xml:
-    image: workernode
+    image: exponenci/compare-serializer:latest
     environment:
       - METHOD=xml
-    depends_on:
-      - _workbuilder
     env_file:
       - .env
     hostname: xml
     command: python3 worker_node.py
 
   json:
-    image: workernode
+    image: exponenci/compare-serializer:latest
     environment:
       - METHOD=json
-    depends_on:
-      - _workbuilder
     env_file:
       - .env
     hostname: json
     command: python3 worker_node.py
 
   avro:
-    image: workernode
+    image: exponenci/compare-serializer:latest
     environment:
       - METHOD=avro
-    depends_on:
-      - _workbuilder
     env_file:
       - .env
     hostname: avro
     command: python3 worker_node.py
 
   msgpack:
-    image: workernode
+    image: exponenci/compare-serializer:latest
     environment:
       - METHOD=msgpack
-    depends_on:
-      - _workbuilder
     env_file:
       - .env
     hostname: msgpack
     command: python3 worker_node.py
 
   proto:
-    image: workernode
+    image: exponenci/compare-serializer:latest
     environment:
       - METHOD=proto
-    depends_on:
-      - _workbuilder
     env_file:
       - .env
     hostname: proto
     command: python3 worker_node.py
   
   yaml:
-    image: workernode
+    image: exponenci/compare-serializer:latest
     environment:
       - METHOD=yaml
-    depends_on:
-      - _workbuilder
     env_file:
       - .env
     hostname: yaml
